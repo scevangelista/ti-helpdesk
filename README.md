@@ -28,14 +28,13 @@ In Future we'll creates a client software for run in computers of organization f
 
 
 ##
-### How to Run
+### How to Run :electric_plug:  
 
 **Requirements**
-- Node v16
-- Mysql Server
+- Docker and docker-compose
 
-**Comands to run:**
-- First, in backend alter the .env.example to .env and inform values of your setup.  
+**Instructions to run:**
+- First, clone the repository and in backend folder move the .env.example to .env and inform values of your setup  
 
 ```
 $cd backend
@@ -44,7 +43,7 @@ $mv .env.example .env
 $nano .env
 ```  
 
-- Second, in frontend alter the .env.example to .env and inform values of your setup.  
+- Second, in frontend alter the .env.example to .env and inform values of your setup  
 ```
 $cd ..
 $cd frontend
@@ -53,14 +52,14 @@ $mv .env.example .env
 $nano .env
 ```
 
-- Third, configure Docker compose with your values of backend .env
+- Third, configure Docker compose with your values of backend .env  
 ```
 $cd ..
 //For default not alter the docker-compose.yml content
 $nano docker-compose.yml
 ```
 
-- Fourth, execute docker-compose
+- Fourth, execute docker-compose  
 ```
 $docker-compose build
 $docker-compose start
