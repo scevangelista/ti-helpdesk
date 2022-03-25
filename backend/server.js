@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./config/db');
-const staffController = require('./../controllers/staff');
+const staffController = require('./src/controllers/staff');
 const { 
     AuthRoutes,
     ActivityRoutes, 

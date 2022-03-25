@@ -32,6 +32,7 @@ In Future we'll creates a client software for run in computers of organization f
 
 **Requirements**
 - Docker and docker-compose
+- NodeJS v16
 
 **Instructions to run:**
 - First, clone the repository and in backend folder move the .env.example to .env and inform values of your setup  
@@ -43,13 +44,15 @@ $mv .env.example .env
 $nano .env
 ```  
 
-- Second, in frontend alter the .env.example to .env and inform values of your setup  
+- Second, in frontend alter the .env.example to .env and inform values of your setup and build the sources
 ```
 $cd ..
 $cd frontend
 $mv .env.example .env
 //For default not alter .env content
 $nano .env
+$npm install
+$npm run build
 ```
 
 - Third, configure Docker compose with your values of backend .env  
@@ -67,3 +70,6 @@ $docker-compose start
 
 - Access the system in web browser:
 http://ip_of_docker_server
+
+username: ti@localhost
+password: helpdesk
