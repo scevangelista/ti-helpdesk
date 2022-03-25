@@ -45,11 +45,11 @@ $nano .env
 ```  
 
 - Second, in frontend alter the .env.example to .env and inform values of your setup and build the sources
+**Change in REACT_APP_HOST *backend* to docker IP server**
 ```
 $cd ..
 $cd frontend
 $mv .env.example .env
-//For default not alter .env content
 $nano .env
 $npm install
 $npm run build
