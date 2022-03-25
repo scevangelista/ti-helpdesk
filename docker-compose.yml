@@ -1,0 +1,34 @@
+version: "3.1"
+services:
+    db:
+        image: mysql:8.0
+        ports:
+        - "3316:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_ROOT_PASSWORD: helpdesk
+            MYSQL_DATABASE: helpdesk
+        volumes:
+        - ./mysql/lib/:/var/lib/mysql
+        networks:
+        - default
+    backend:
+        build: ./backend
+        ports:
+        - "4000:4000"
+        depends_on:
+        - db
+        links:
+        - db
+        networks:
+        - default
+    frontend:
+        build: ./frontend
+        ports:
+        - "80:80"
+        links:
+        - backend
+        networks:
+        - default
+volumes:
+    persitent:
