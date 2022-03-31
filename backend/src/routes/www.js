@@ -12,4 +12,5 @@ module.exports = {
     StaffRoutes: require('./staff'),
     TicketRoutes: require('./ticket'),
     TicketTypesRoutes: require('./ticket_type'),
+    TransferRoutes: require('./transfer'),
 };

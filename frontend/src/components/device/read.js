@@ -75,6 +75,7 @@ export default function Read() {
                         <Table.HeaderCell>Type</Table.HeaderCell>
                         <Table.HeaderCell>Details</Table.HeaderCell>
                         <Table.HeaderCell>Staff</Table.HeaderCell>
+                        <Table.HeaderCell>IP</Table.HeaderCell>
                         <Table.HeaderCell>Status</Table.HeaderCell>
                         <Table.HeaderCell>Update</Table.HeaderCell>
                         <Table.HeaderCell>Delete</Table.HeaderCell>
@@ -90,6 +91,7 @@ export default function Read() {
                                 <DeviceTypeName device_type_id={data.device_type_id} types={APIType} />
                                 <Table.Cell>{data.details}</Table.Cell>
                                 <StaffName staff_id={data.staff_id} staffs={APIStaff} />
+                                <Table.Cell>{data.ip ? data.ip : 'Not informed'}</Table.Cell>
                                 <Table.Cell>{data.status ? 'Active' : 'Inactive'}</Table.Cell>
                                 <Table.Cell>
                                     <Link to='/devices/update'>

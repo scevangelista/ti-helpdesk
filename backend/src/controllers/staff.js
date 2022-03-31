@@ -14,6 +14,12 @@ exports.findAll = function (req, res) {
     }
 }
 
+exports.findAllName = function (req, res) {
+    StaffModel.findAll({
+        attributes: ['staff_id', 'first_name', 'last_name']
+    }).then((result) => res.json(result));
+}
+
 exports.find = function (req, res) {
     StaffModel.findByPk(req.params.id, { 
         attributes: ['first_name', 'last_name']

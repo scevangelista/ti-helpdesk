@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form } from 'semantic-ui-react'
+import { Table, Button, Form } from 'semantic-ui-react'
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -25,6 +25,7 @@ export default function Update() {
     const [APIDataDepartments, setAPIDataDepartments] = useState([]);
     const [APIDataManufacturers, setAPIDataManufacturers] = useState([]);
     const [APIDataStaffs, setAPIDataStaffs] = useState([]);
+    const [APIDataTransfers, setAPIDataTransfers] = useState([]);
 
     useEffect(() => {
         setID(localStorage.getItem('DeviceID'))
@@ -39,23 +40,31 @@ export default function Update() {
         setManufacturer(localStorage.getItem('DeviceManufacturer'));
         setStaff(localStorage.getItem('DeviceStaff'));
 
+        let endpoints = [
+            constants.HOST + '/staffs/all',
+            constants.HOST + '/device-types',
+            constants.HOST + '/departments',
+            constants.HOST + '/manufacturers',
+            constants.HOST + '/transfers/' + localStorage.getItem('DeviceID')
+        ];
+
+        Promise.all(endpoints.map((endpoint) => axios.get(
+            endpoint, { headers: { token: token } })))
+            .then(([
+                { data: staffs },
+                { data: types },
+                { data: departments },
+                { data: manufacturers },
+                { data: transfers }
+            ]) => {
+                setAPIDataStaffs(staffs)
+                setAPIDataDevTypes(types)
+                setAPIDataDepartments(departments)
+                setAPIDataManufacturers(manufacturers)
+                setAPIDataTransfers(transfers)
+            });
+
         if (!token) navigate('/');
-
-        axios.get(constants.HOST + '/device-types', {
-            headers: { token: token }
-        }).then((response) => { setAPIDataDevTypes(response.data); })
-
-        axios.get(constants.HOST + '/departments', {
-            headers: { token: token }
-        }).then((response) => { setAPIDataDepartments(response.data); })
-
-        axios.get(constants.HOST + '/manufacturers', {
-            headers: { token: token }
-        }).then((response) => { setAPIDataManufacturers(response.data); })
-
-        axios.get(constants.HOST + '/staffs', {
-            headers: { token: token }
-        }).then((response) => { setAPIDataStaffs(response.data); })
     }, []);
 
     const updateAPIData = () => {
@@ -149,7 +158,7 @@ export default function Update() {
                 <Form.Field>
                     <label>Staff Owner</label>
                     <select value={staff_id} onChange={(e) => setStaff(e.target.value)}>
-                        <option valuye='0'>-- Select Option --</option>
+                        <option value='0'>-- Select Option --</option>
                         {APIDataStaffs.map((data) => {
                             return (
                                 <option value={data.staff_id}>{data.first_name} {data.last_name}</option>
@@ -164,6 +173,49 @@ export default function Update() {
                 </Link>
                 <div class='arruma'></div>
             </Form>
+            <p>
+                Transfers of Owners
+            </p>
+            <TransfersTable transfers={APIDataTransfers} staffs={APIDataStaffs} />
         </div>
     )
+
+    function TransfersTable(props) {
+        const transfers = props.transfers;
+        const staffs = props.staffs;
+        return <Table singleLine key='DTransfersTable'>
+            <Table.Header>
+                <Table.Row key={0}>
+                    <Table.HeaderCell>Old Owner</Table.HeaderCell>
+                    <Table.HeaderCell>New Owner</Table.HeaderCell>
+                    <Table.HeaderCell>Date</Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                {transfers.map((data) => {
+                    return (
+                        <Table.Row key={data.uniqueId}>
+                            <StaffName staff_id={data.old_staff_id} staffs={staffs} />
+                            <StaffName staff_id={data.new_staff_id} staffs={staffs} />
+                            <Table.Cell>{data.created_at}</Table.Cell>
+                        </Table.Row>
+                    )
+                })}
+            </Table.Body>
+        </Table>
+    }
+
+    function StaffName(props) {
+        const staff_id = props.staff_id;
+        const staffs = props.staffs;
+
+        function isSelected(element, index, array) {
+            return (element.staff_id === staff_id) ? true : false;
+        }
+
+        var staffIndex = staffs.findIndex(isSelected);
+        var name = staffs[staffIndex].first_name + " " + staffs[staffIndex].last_name;
+
+        return <Table.Cell>{name}</Table.Cell>
+    }
 }

@@ -11,23 +11,24 @@ services:
         volumes:
         - ./mysql/lib/:/var/lib/mysql
         networks:
-        - default
-    backend:
-        build: ./backend
-        ports:
-        - "4000:4000"
-        depends_on:
-        - db
-        links:
-        - db
-        networks:
-        - default
+        - default    
     frontend:
         build: ./frontend
         ports:
         - "80:80"
         links:
         - backend
+        networks:
+        - default
+    backend:
+        build: ./backend
+        ports:
+        - "4000:4000"
+        restart: always
+        depends_on:
+        - db
+        links:
+        - db
         networks:
         - default
 volumes:

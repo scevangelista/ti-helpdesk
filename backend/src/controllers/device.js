@@ -1,15 +1,16 @@
 const DeviceModel = require("../models/device.model");
+const Transfer = require('./transfer');
 
 exports.findAll = async function (req, res) {
     if (req.administrator === true) {
         DeviceModel.findAll({
-            order: [ ['name', 'ASC'] ]
+            order: [['name', 'ASC']]
         }).then((result) => res.json(result));
     }
     else {
         DeviceModel.findAll({
             where: { staff_id: req.userId },
-            order: [ ['name', 'ASC'] ]
+            order: [['name', 'ASC']]
         }).then((result) => res.json(result));
     }
 }
@@ -19,9 +20,11 @@ exports.find = function (req, res) {
 }
 
 exports.create = async function (req, res) {
+    const price = req.body.price.replace(',', '.');
+
     await DeviceModel.create({
         name: req.body.name,
-        price: req.body.price,
+        price: price,
         purchased_at: req.body.purchased_at,
         details: req.body.details,
         serial: req.body.serial,
@@ -34,18 +37,26 @@ exports.create = async function (req, res) {
 }
 
 exports.update = async function (req, res) {
+    const device_before = await DeviceModel.findByPk(req.params.id);
+
+    if (device_before.staff_id != req.body.staff_id) {
+        Transfer.create(req.params.id, device_before.staff_id, req.body.staff_id);
+    }
+
+    const price = req.body.price.replace(',', '.');
+
     await DeviceModel.update({
-            name: req.body.name,
-            price: req.body.price,
-            purchased_at: req.body.purchased_at,
-            details: req.body.details,
-            serial: req.body.serial,
-            ip: req.body.ip,
-            device_type_id: req.body.device_type_id,
-            department_id: req.body.department_id,
-            manufacturer_id: req.body.manufacturer_id,
-            staff_id: req.body.staff_id
-        },
+        name: req.body.name,
+        price: price,
+        purchased_at: req.body.purchased_at,
+        details: req.body.details,
+        serial: req.body.serial,
+        ip: req.body.ip,
+        device_type_id: req.body.device_type_id,
+        department_id: req.body.department_id,
+        manufacturer_id: req.body.manufacturer_id,
+        staff_id: req.body.staff_id
+    },
         { where: { device_id: req.params.id } });
 
     DeviceModel.findByPk(req.params.id).then((result) => res.json(result));

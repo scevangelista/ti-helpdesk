@@ -77,7 +77,7 @@ export default function Create() {
                 </Form.Field>
                 <Form.Field>
                     <label>Price</label>
-                    <input placeholder='Price' type="number" onChange={(e) => setPrice(e.target.value)} />
+                    <input placeholder='Price' type="number" step='0.1' min='0' onChange={(e) => setPrice(e.target.value)} />
                 </Form.Field>
                 <Form.Field>
                     <label>Purchased at</label>

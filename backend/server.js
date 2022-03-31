@@ -17,7 +17,8 @@ const {
     RevisionRoutes, 
     StaffRoutes,
     TicketRoutes, 
-    TicketTypesRoutes } = require('./src/routes/www');
+    TicketTypesRoutes,
+    TransferRoutes } = require('./src/routes/www');
 
 
 const app = express();
@@ -37,6 +38,7 @@ app.use('/revisions', RevisionRoutes);
 app.use('/staffs', StaffRoutes);
 app.use('/tickets', TicketRoutes);
 app.use('/ticket-types', TicketTypesRoutes);
+app.use('/transfers', TransferRoutes);
 
 db.sync(() => console.log(`Database connected: ${process.env.DB_NAME}`)).then(() => {
     staffController.initial();

@@ -11,14 +11,14 @@ In Future we'll creates a client software for run in computers of organization f
 ### Checklist
 **Backend**
 - [x] Backend in NodeJS
-- [ ] Historic of device owners 
+- [x] Historic of device owners 31/03/2022
 - [ ] Ping monitor service
 
 **Frontend Modules**
 - [x] Staff
 - [x] Device
 - [x] Configurations
-- [ ] Historic of device owners
+- [x] Historic of device owners 31/03/2022
 - [ ] Revision of device
 - [ ] Reports
 - [ ] Dashboard

@@ -178,6 +178,7 @@ button:hover{
   padding: 10px;
   border: 1px solid #DDD;
   border-radius: 8px;
+  margin-bottom: 30px;
 }
 #content form .field{
   float: left;
