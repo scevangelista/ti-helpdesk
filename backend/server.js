@@ -10,6 +10,7 @@ const {
     DepartmentRoutes, 
     DeviceRoutes,
     DeviceTypesRoutes, 
+    FurnituresRoutes,
     ManufacturerRoutes, 
     MonitorRoutes, 
     PingRoutes, 
@@ -18,7 +19,8 @@ const {
     StaffRoutes,
     TicketRoutes, 
     TicketTypesRoutes,
-    TransferRoutes } = require('./src/routes/www');
+    TransferRoutes,
+    UploadRoutes } = require('./src/routes/www');
 
 
 const app = express();
@@ -30,6 +32,7 @@ app.use('/activities', ActivityRoutes);
 app.use('/departments', DepartmentRoutes);
 app.use('/devices', DeviceRoutes);
 app.use('/device-types', DeviceTypesRoutes);
+app.use('/furnitures', FurnituresRoutes);
 app.use('/monitors', MonitorRoutes);
 app.use('/manufacturers', ManufacturerRoutes);
 app.use('/pings', PingRoutes);
@@ -39,6 +42,7 @@ app.use('/staffs', StaffRoutes);
 app.use('/tickets', TicketRoutes);
 app.use('/ticket-types', TicketTypesRoutes);
 app.use('/transfers', TransferRoutes);
+app.use('/upload', UploadRoutes);
 
 db.sync(() => console.log(`Database connected: ${process.env.DB_NAME}`)).then(() => {
     staffController.initial();

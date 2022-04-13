@@ -26,6 +26,7 @@ export default function Update() {
     const [APIDataManufacturers, setAPIDataManufacturers] = useState([]);
     const [APIDataStaffs, setAPIDataStaffs] = useState([]);
     const [APIDataTransfers, setAPIDataTransfers] = useState([]);
+    const [APIDataRevisions, setAPIDataRevisions] = useState([]);
 
     useEffect(() => {
         setID(localStorage.getItem('DeviceID'))
@@ -45,7 +46,8 @@ export default function Update() {
             constants.HOST + '/device-types',
             constants.HOST + '/departments',
             constants.HOST + '/manufacturers',
-            constants.HOST + '/transfers/' + localStorage.getItem('DeviceID')
+            constants.HOST + '/transfers/' + localStorage.getItem('DeviceID'),
+            constants.HOST + '/revisions/dev/' + localStorage.getItem('DeviceID')
         ];
 
         Promise.all(endpoints.map((endpoint) => axios.get(
@@ -55,13 +57,15 @@ export default function Update() {
                 { data: types },
                 { data: departments },
                 { data: manufacturers },
-                { data: transfers }
+                { data: transfers },
+                { data: revisions }
             ]) => {
                 setAPIDataStaffs(staffs)
                 setAPIDataDevTypes(types)
                 setAPIDataDepartments(departments)
                 setAPIDataManufacturers(manufacturers)
                 setAPIDataTransfers(transfers)
+                setAPIDataRevisions(revisions)
             });
 
         if (!token) navigate('/');
@@ -86,6 +90,37 @@ export default function Update() {
             }).then(() => {
                 navigate('/devices/read')
             })
+    }
+
+    const createRevision = () => {
+        var dateObj = new Date();
+        var date = dateObj.getFullYear() + "-" + String(dateObj.getMonth()).padStart(2, "0") + "-" + String(dateObj.getDate()).padStart(2, "0");
+        localStorage.setItem('DeviceIDRevision', device_id);
+        localStorage.setItem('StaffIDRevision', staff_id);
+        localStorage.setItem('DateRevision', date);
+
+        axios.post(constants.HOST + '/revisions', {
+            date,
+            device_id,
+            staff_id
+        },
+            {
+                headers: { token: token }
+            }).then(response => {
+                console.log(response.data);
+                localStorage.setItem('IDRevision', response.data.revision_id);
+                localStorage.setItem('StatusRevision', response.data.status);
+            });
+    }
+
+    const updateRevision = (data) => {
+        let {device_id, revision_id, staff_id, created_at, status} = data;
+
+        localStorage.setItem('DeviceIDRevision', device_id);
+        localStorage.setItem('StaffIDRevision', staff_id);
+        localStorage.setItem('DateRevision', created_at);
+        localStorage.setItem('IDRevision', revision_id);
+        localStorage.setItem('StatusRevision', status);
     }
 
     return (
@@ -173,7 +208,14 @@ export default function Update() {
                 </Link>
                 <div class='arruma'></div>
             </Form>
-            <p>
+            <Link to='/revisions/create'>
+                <Button onClick={() => createRevision()} className='blue bt-new-table'>Create</Button>
+            </Link>
+            <p class='line-top'>
+                Revisions of Device
+            </p>
+            <RevisionsTable revisions={APIDataRevisions} staffs={APIDataStaffs} />
+            <p class='line-top'>
                 Transfers of Owners
             </p>
             <TransfersTable transfers={APIDataTransfers} staffs={APIDataStaffs} />
@@ -183,26 +225,75 @@ export default function Update() {
     function TransfersTable(props) {
         const transfers = props.transfers;
         const staffs = props.staffs;
-        return <Table singleLine key='DTransfersTable'>
-            <Table.Header>
-                <Table.Row key={0}>
-                    <Table.HeaderCell>Old Owner</Table.HeaderCell>
-                    <Table.HeaderCell>New Owner</Table.HeaderCell>
-                    <Table.HeaderCell>Date</Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
-            <Table.Body>
-                {transfers.map((data) => {
-                    return (
-                        <Table.Row key={data.uniqueId}>
-                            <StaffName staff_id={data.old_staff_id} staffs={staffs} />
-                            <StaffName staff_id={data.new_staff_id} staffs={staffs} />
-                            <Table.Cell>{data.created_at}</Table.Cell>
-                        </Table.Row>
-                    )
-                })}
-            </Table.Body>
-        </Table>
+
+        if (transfers.length > 0) {
+            return <Table singleLine key='DTransfersTable'>
+                <Table.Header>
+                    <Table.Row key={0}>
+                        <Table.HeaderCell>Old Owner</Table.HeaderCell>
+                        <Table.HeaderCell>New Owner</Table.HeaderCell>
+                        <Table.HeaderCell>Date</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    {transfers.map((data) => {
+                        return (
+                            <Table.Row key={data.uniqueId}>
+                                <StaffName staff_id={data.old_staff_id} staffs={staffs} />
+                                <StaffName staff_id={data.new_staff_id} staffs={staffs} />
+                                <Table.Cell>{data.created_at}</Table.Cell>                                
+                            </Table.Row>
+                        )
+                    })}
+                </Table.Body>
+            </Table>;
+        }
+        else {
+            return <p class='small'>Device whithout transfers</p>;
+        }
+    }
+
+    function RevisionsTable(props) {
+        const revisions = props.revisions;
+        const staffs = props.staffs;
+
+        if (revisions.length > 0) {
+            return <Table singleLine key='DRevisionsTable'>
+                <Table.Header>
+                    <Table.Row key={0}>
+                        <Table.HeaderCell>Staff</Table.HeaderCell>
+                        <Table.HeaderCell>Date of Revision</Table.HeaderCell>
+                        <Table.HeaderCell>Created At</Table.HeaderCell>
+                        <Table.HeaderCell>Status</Table.HeaderCell>
+                        <Table.HeaderCell>Actions</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    {revisions.map((data) => {
+                        return (
+                            <Table.Row key={data.uniqueId}>
+                                <StaffName staff_id={data.staff_id} staffs={staffs} />
+                                <Table.Cell>{data.date}</Table.Cell>
+                                <Table.Cell>{data.created_at}</Table.Cell>
+                                {(data.status === 1) ?
+                                    <Table.Cell>Waiting</Table.Cell>
+                                    :
+                                    <Table.Cell>Aproved</Table.Cell>
+                                }
+                                <Table.Cell>
+                                    <Link to='/revisions/create'>
+                                        <Button onClick={() => updateRevision(data)} className='blue'>Update</Button>
+                                    </Link>
+                                </Table.Cell>
+                            </Table.Row>
+                        )
+                    })}
+                </Table.Body>
+            </Table>;
+        }
+        else {
+            return <p class='small'>Device whithout revisions</p>;
+        }
     }
 
     function StaffName(props) {

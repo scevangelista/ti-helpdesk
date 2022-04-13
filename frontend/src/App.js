@@ -22,6 +22,12 @@ import TicketTypeUpdate from './components/ticket_type/update';
 import DeviceRead from './components/device/read';
 import DeviceCreate from './components/device/create';
 import DeviceUpdate from './components/device/update';
+import FurnitureCreate from './components/furniture/create';
+import FurnitureRead from './components/furniture/read';
+import FurnitureUpdate from './components/furniture/update';
+import RevisionCreate from './components/revision/create';
+import DashboardAdmin from './components/dashboard/administrator';
+import * as constants from './configs/constants';
 
 
 function App() {
@@ -57,31 +63,37 @@ function App() {
                     <div id='content'>
                         <Router>
                             <Routes>
-                                  <Route path="/staffs/read" element={<StaffRead />} />
-                                  <Route path="/staffs/create" element={<StaffCreate />} />
-                                  <Route path="/staffs/update" element={<StaffUpdate />} />
-                                  <Route path="/staffs/password" element={<StaffPassword />} />
-                                  <Route path="/device-types/read" element={<DeviceTypeRead />} />
-                                  <Route path="/device-types/create" element={<DeviceTypeCreate />} />
-                                  <Route path="/device-types/update" element={<DeviceTypeUpdate />} />
-                                  <Route path="/manufacturers/read" element={<ManufacturerRead />} />
-                                  <Route path="/manufacturers/create" element={<ManufacturerCreate />} />
-                                  <Route path="/manufacturers/update" element={<ManufacturerUpdate />} />
-                                  <Route path="/departments/read" element={<DepartmentRead />} />
-                                  <Route path="/departments/create" element={<DepartmentCreate />} />
-                                  <Route path="/departments/update" element={<DepartmentUpdate />} />
-                                  <Route path="/ticket-types/read" element={<TicketTypeRead />} />
-                                  <Route path="/ticket-types/create" element={<TicketTypeCreate />} />
-                                  <Route path="/ticket-types/update" element={<TicketTypeUpdate />} />
-                                  <Route path="/devices/read" element={<DeviceRead />} />
-                                  <Route path="/devices/create" element={<DeviceCreate />} />
-                                  <Route path="/devices/update" element={<DeviceUpdate />} />
+                                <Route path="/" element={<DashboardAdmin />} />
+                                <Route path="/dashboard-admin" element={<DashboardAdmin />} />
+                                <Route path="/staffs/read" element={<StaffRead />} />
+                                <Route path="/staffs/create" element={<StaffCreate />} />
+                                <Route path="/staffs/update" element={<StaffUpdate />} />
+                                <Route path="/staffs/password" element={<StaffPassword />} />
+                                <Route path="/device-types/read" element={<DeviceTypeRead />} />
+                                <Route path="/device-types/create" element={<DeviceTypeCreate />} />
+                                <Route path="/device-types/update" element={<DeviceTypeUpdate />} />
+                                <Route path="/manufacturers/read" element={<ManufacturerRead />} />
+                                <Route path="/manufacturers/create" element={<ManufacturerCreate />} />
+                                <Route path="/manufacturers/update" element={<ManufacturerUpdate />} />
+                                <Route path="/departments/read" element={<DepartmentRead />} />
+                                <Route path="/departments/create" element={<DepartmentCreate />} />
+                                <Route path="/departments/update" element={<DepartmentUpdate />} />
+                                <Route path="/ticket-types/read" element={<TicketTypeRead />} />
+                                <Route path="/ticket-types/create" element={<TicketTypeCreate />} />
+                                <Route path="/ticket-types/update" element={<TicketTypeUpdate />} />
+                                <Route path="/devices/read" element={<DeviceRead />} />
+                                <Route path="/devices/create" element={<DeviceCreate />} />
+                                <Route path="/devices/update" element={<DeviceUpdate />} />
+                                <Route path="/furnitures/read" element={<FurnitureRead />} />
+                                <Route path="/furnitures/create" element={<FurnitureCreate />} />
+                                <Route path="/furnitures/update" element={<FurnitureUpdate />} />
+                                <Route path="/revisions/create" element={<RevisionCreate />} />
                             </Routes>
                         </Router>
                     </div>
                 </section>
                 <footer>
-                    <p>HELPDESK TI - {process.env.REACT_APP_COMPANY} - Version {process.env.REACT_APP_VERSION}</p>
+                    <p>HELPDESK TI - {process.env.REACT_APP_COMPANY} - Local Version {process.env.REACT_APP_VERSION} - Official Version {constants.VERSION}</p>
                 </footer>
             </div>
         );
@@ -99,6 +111,7 @@ function MenuNotAdministrator() {
     return (
         <div>
             <a href='/devices/read'><li>Devices</li></a>
+            <a href='/furnitures/read'><li>Furnitures</li></a>
         </div>);
 }
 
@@ -106,7 +119,9 @@ function MenuAdministrator() {
     return (
         <div>
             <p>Management</p>
+            <a href='/dashboard-admin'><li>Dashboard</li></a>
             <a href='/devices/read'><li>Devices</li></a>
+            <a href='/furnitures/read'><li>Furnitures</li></a>
             <a href='/staffs/read'><li>Staffs</li></a>
 
             <p>Configurations</p>

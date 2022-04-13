@@ -8,6 +8,12 @@ exports.find = function (req, res) {
     PhotoModel.findByPk(req.params.id).then((result) => res.json(result));
 }
 
+exports.findAllRevision = function (req, res) {
+    PhotoModel.findAll({
+        where: { revision_id: req.params.id }
+    }).then((result) => res.json(result));
+}
+
 exports.create = async function (req, res) {
     await PhotoModel.create({
         url: req.body.url,

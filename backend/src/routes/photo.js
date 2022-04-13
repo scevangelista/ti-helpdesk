@@ -7,6 +7,7 @@ const routes = Express.Router()
 routes.get("/", auth.logged, photo.findAll);
 routes.post("/", auth.logged, photo.create);
 routes.get("/:id", auth.logged, photo.find);
+routes.get("/rev/:id", auth.logged, photo.findAllRevision);
 routes.put("/:id", auth.logged, photo.update);
 routes.delete("/:id", auth.logged, photo.destroy);
 

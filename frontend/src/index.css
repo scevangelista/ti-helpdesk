@@ -133,6 +133,11 @@ section{
   float: right;  
   padding: 0 25px;
 }
+#content button.bt-new-table{
+  margin-top: 15px;
+  float: right;  
+  padding: 0 25px;
+}
 #content table{
   border: 0; 
   width: 100%;
@@ -141,8 +146,9 @@ section{
   border-collapse: collapse !important;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #fefefe;
+  background-color: #f8f8f8;
   font-size: 13px;
+  margin-bottom: 15px;
 }
 #content table thead{
   background-color: #2b2d42;
@@ -159,7 +165,7 @@ section{
   padding-left: 10px;
 }
 #content table tbody tr:nth-child(even){
-  background-color:#F0F0F0 !important;
+  background-color:#EFEFEF !important;
 }
 button{
   height: 35px;
@@ -171,6 +177,9 @@ button{
 }
 button:hover{
   opacity: 0.8;
+}
+#content p.small{
+  font-size: 12px;
 }
 
 #content form{
@@ -184,6 +193,14 @@ button:hover{
   float: left;
   padding: 10px;
   width: 33.33333333333333333333333333333333333333%;
+}
+#content form .field{
+  float: left;
+  padding: 10px;
+  width: 33.33333333333333333333333333333333333333%;
+}
+#content form .field.field1-4{
+  width: 25%;
 }
 #content form .field label{
   color: #2b2d42;
@@ -243,6 +260,31 @@ button:hover{
   color: #2b2d42;
 }
 
+#content .statusDashboard{
+  width: 25%;
+  padding: 10px;
+  float: left;
+}
+#content .statusDashboard div{
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 15px;
+}
+#content .statusDashboard div h4{
+  font-size: 20px;
+  border-bottom: 1px solid #CCC;
+  color: #999;
+}
+#content .statusDashboard div p{
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  padding-top: 12px;
+  font-weight: bold;
+  color: #555;
+  text-align: right;
+}
+
 .arruma{
   clear: both;
 }
@@ -277,6 +319,10 @@ footer p{
 }
 .gray{
   background-color: #777 !important;
+}
+.line-top{
+  border-top: 1px solid #DDD;
+  padding-top: 15px;
 }
 
 code {

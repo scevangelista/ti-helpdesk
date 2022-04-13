@@ -6,6 +6,7 @@ const routes = Express.Router()
 
 routes.get("/", auth.logged, device.findAll);
 routes.post("/", auth.logged, device.create);
+routes.get("/staff/:id", auth.logged, device.findAllStaff);
 routes.get("/:id", auth.logged, device.find);
 routes.put("/:id", auth.logged, device.update);
 routes.delete("/:id", auth.logged, device.destroy);

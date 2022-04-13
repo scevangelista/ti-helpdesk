@@ -15,7 +15,14 @@ exports.findAll = async function (req, res) {
     }
 }
 
-exports.find = function (req, res) {
+exports.findAllStaff = async function (req, res) {
+    DeviceModel.findAll({
+        where: { staff_id: req.params.id },
+        order: [['name', 'ASC']]
+    }).then((result) => res.json(result));
+}
+
+exports.find = async function (req, res) {
     DeviceModel.findByPk(req.params.id).then((result) => res.json(result));
 }
 

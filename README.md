@@ -17,9 +17,10 @@ In Future we'll creates a client software for run in computers of organization f
 **Frontend Modules**
 - [x] Staff
 - [x] Device
+- [x] Furniture
 - [x] Configurations
 - [x] Historic of device owners 31/03/2022
-- [ ] Revision of device
+- [x] Revision of device
 - [ ] Reports
 - [ ] Dashboard
 
@@ -71,5 +72,18 @@ $docker-compose start
 - Access the system in web browser:
 http://ip_of_docker_server
 
-username: ti@localhost
+username: ti@localhost  
 password: helpdesk
+
+
+Changelog:
+1.0.2
+- Add. Furnitures
+
+1.0.1
+- Add. Revisions
+- Add. Photo upload (multer)
+- Show devices of staff in staff edit page
+
+1.0.0
+- Initial Version

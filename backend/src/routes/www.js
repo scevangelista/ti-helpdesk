@@ -4,6 +4,7 @@ module.exports = {
     DepartmentRoutes: require('./department'),
     DeviceRoutes: require('./device'),
     DeviceTypesRoutes: require('./device_type'),
+    FurnituresRoutes: require('./furniture'),
     MonitorRoutes: require('./monitor'),
     ManufacturerRoutes: require('./manufacturer'),
     PingRoutes: require('./ping'),
@@ -13,4 +14,5 @@ module.exports = {
     TicketRoutes: require('./ticket'),
     TicketTypesRoutes: require('./ticket_type'),
     TransferRoutes: require('./transfer'),
+    UploadRoutes: require('./upload')
 };

@@ -18,6 +18,8 @@ services:
         - "80:80"
         links:
         - backend
+        volumes:
+        - ./photos/:/usr/share/nginx/html/photos
         networks:
         - default
     backend:
@@ -29,6 +31,8 @@ services:
         - db
         links:
         - db
+        volumes:
+        - ./photos/:/home/node/app/photos
         networks:
         - default
 volumes:

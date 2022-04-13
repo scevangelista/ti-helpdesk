@@ -7,6 +7,7 @@ const routes = Express.Router()
 routes.get("/", auth.logged, revision.findAll);
 routes.post("/", auth.logged, revision.create);
 routes.get("/:id", auth.logged, revision.find);
+routes.get("/dev/:id", auth.logged, revision.findAllDevice);
 routes.put("/:id", auth.logged, revision.update);
 routes.delete("/:id", auth.logged, revision.destroy);
 
