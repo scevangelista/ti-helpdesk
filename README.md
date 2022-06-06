@@ -75,15 +75,15 @@ http://ip_of_docker_server
 username: ti@localhost  
 password: helpdesk
 
-
-Changelog:
-1.0.2
+##
+### Changelog:
+**1.0.2**  
 - Add. Furnitures
 
-1.0.1
+**1.0.1**  
 - Add. Revisions
 - Add. Photo upload (multer)
 - Show devices of staff in staff edit page
 
-1.0.0
+**1.0.0** 
 - Initial Version
