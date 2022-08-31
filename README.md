@@ -24,8 +24,8 @@ In Future we'll creates a client software for run in computers of organization f
 - [ ] Reports
 - [ ] Dashboard
 
-**Client Software**
-- [ ] Project
+**Client Software** 
+- [x] [Project](https://github.com/scevangelista/ti-helpdesk-monitor)
 
 
 ##
